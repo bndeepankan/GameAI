@@ -65,13 +65,16 @@ def move_by_evaluation(S, p):
     else:
         for i in range(len(xs)):
             S[xs[i], ys[i]] = p
-            curr_x = evaluate(S, -1)
-            curr_o = evaluate(S, 1)
-            curr = curr_x - curr_o
-            if curr > max_val:
-                index = i
-                max_val = curr
-            S[xs[i], ys[i]] = 0
+            if not move_was_winning_move(S, p):
+                curr_x = evaluate(S, -1)
+                curr_o = evaluate(S, 1)
+                curr = curr_x - curr_o
+                if curr > max_val:
+                    index = i
+                    max_val = curr
+                S[xs[i], ys[i]] = 0
+            else:
+                return S
 
     S[xs[index], ys[index]] = p
     return S
@@ -79,21 +82,21 @@ def move_by_evaluation(S, p):
 
 def evaluate(S, p):
     count = 0
-    if len(np.where(S[0,:] == p)[0]) == 0:
+    if -p not in S[0,:]:
         count = count + 1
-    if len(np.where(S[1,:] == p)[0]) == 0:
+    if -p not in S[1,:]:
         count = count + 1
-    if len(np.where(S[2,:] == p)[0]) == 0:
+    if -p not in S[2,:]:
         count = count + 1
-    if len(np.where(S[:,0] == p)[0]) == 0:
+    if -p not in S[:,0]:
         count = count + 1
-    if len(np.where(S[:,1] == p)[0]) == 0:
+    if -p not in S[:,1]:
         count = count + 1
-    if len(np.where(S[:,2] == p)[0]) == 0:
+    if -p not in S[:,2]:
         count = count + 1
-    if len(np.where(np.diag(S) == p)[0]) == 0:
+    if -p not in np.diag(S):
         count = count + 1
-    if len(np.where(np.rot90(S) == p)[0]) == 0:
+    if -p not in np.diag(np.rot90(S)):
         count = count + 1
     return count
 
