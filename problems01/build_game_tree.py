@@ -5,7 +5,9 @@ import numpy as np
 def buildTree(S, p, node):
     succ = []
 
-    if not move_was_winning_move(S, p):
+    check = move_was_winning_move(S, p)
+    pos = move_still_possible(S)
+    if not check and pos:
         p *= -1
         rs, cs = np.where(S==0)
         for j in range(rs.size):
@@ -16,6 +18,11 @@ def buildTree(S, p, node):
             nodeDict[newnode] = Ssucc
 
             succ.append(newnode)
+    else:
+        if check:
+            nodeUtilDict[node] = p
+        elif not pos:
+            nodeUtilDict[node] = 0
 
     succDict[node] = succ
 
@@ -25,10 +32,10 @@ def buildTree(S, p, node):
 
 nodeDict = {}
 succDict = {}
-
+nodeUtilDict = {}
 
 if __name__ == '__main__':
-    S = np.array([[1,1,-1],[0,1,0],[0,-1,-1]])
+    S = np.array(([0,1,0],[0,1,0],[0,-1,0]))
     p = 1
 
     node = 0
