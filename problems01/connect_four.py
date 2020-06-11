@@ -54,22 +54,28 @@ def move_was_winning_move(S, p):
 
 
 def count_four(S, p):
+    """
+    Checks if four values are consecutive
+    """
     stack = []
-    arr = list(S)
+    arr = tuple(S)
     n = len(S)
+    if (arr, p) in mapEvalVal:
+        return mapEvalVal[(arr,p)]
     for i in range(n):
         if arr[i] == p:
             stack.append(p)
         else:
-            while stack:
-                stack.pop()
+            stack = []
         if sum(stack) * p == 4:
-            return True
-    return False
+            mapEvalVal[(arr,p)] = 1
+            return mapEvalVal[(arr,p)]
+    mapEvalVal[(arr,p)] = 0
+    return mapEvalVal[(arr, p)]
 
 
 symbols = {1: 'x', -1: 'o', 0: ' '}
-
+mapEvalVal = {}
 
 # print game state matrix using characters
 def print_game_state(S):
