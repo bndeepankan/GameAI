@@ -35,10 +35,7 @@ def move_any_choice(S, node):
     val = node
     if tmp:
         val = np.random.choice(tmp)
-        for k,v in nodeDict.items():
-            if k == val:
-                S = v
-                break
+        S = nodeDict[val]
     return S, val
 
 
