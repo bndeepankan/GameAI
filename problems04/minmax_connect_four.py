@@ -105,8 +105,7 @@ def count_four(S, p):
         if arr[i] == p:
             stack.append(p)
         else:
-            while stack:
-                stack.pop()
+            stack = []
         if sum(stack) * p == 4:
             mapEvalVal[(arr,p)] = 1
             return mapEvalVal[(arr,p)]
