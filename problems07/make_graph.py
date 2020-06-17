@@ -1,4 +1,5 @@
 import numpy as np
+import networkx as nx
 
 
 class makeGraph:
@@ -7,6 +8,21 @@ class makeGraph:
         self.succDict = {}
         self.nodeDict = {}
         self.mapVal = {}
+
+    def build_nx_graph(self, adjDict, locDict):
+        G = nx.from_dict_of_lists(adjDict)
+
+        for n in G.nodes():
+            G.nodes[n]['location'] = locDict[n]
+
+        for e in G.edges():
+            vi = e[0]
+            xi = np.array(G.nodes[vi]['location'])
+            vj = e[1]
+            xj = np.array(G.nodes[vj]['location'])
+            G[vi][vj]['distance'] = np.sqrt(np.sum((xi - xj) ** 2))
+
+        return G
 
     def findSucc(self, a, pos):
         succ = []
@@ -53,5 +69,6 @@ if __name__ == '__main__':
     obj = makeGraph()
 
     obj.create_graph(graph)
+    graph = obj.build_nx_graph(obj.succDict, obj.nodeDict)
     print(obj.nodeDict)
     print(obj.succDict)

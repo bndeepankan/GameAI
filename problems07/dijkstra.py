@@ -3,22 +3,6 @@ import numpy as np
 import networkx as nx
 
 
-def build_nx_graph(adjDict, locDict):
-    G = nx.from_dict_of_lists(adjDict)
-
-    for n in G.nodes():
-        G.nodes[n]['location'] = locDict[n]
-
-    for e in G.edges():
-        vi = e[0]
-        xi = np.array(G.nodes[vi]['location'])
-        vj = e[1]
-        xj = np.array(G.nodes[vj]['location'])
-        G[vi][vj]['distance'] = np.sqrt(np.sum((xi - xj) ** 2))
-
-    return G
-
-
 def test_dijkstra(G, src, t):
     path = nx.dijkstra_path(G, src, t, weight='distance')
     return path
@@ -80,7 +64,7 @@ if __name__ == '__main__':
     obj = makeGraph()
     obj.create_graph(graph)  # Create labels and the location of the graph
 
-    graph = build_nx_graph(obj.succDict, obj.nodeDict)     # Create the graph from the labels and location
+    graph = obj.build_nx_graph(obj.succDict, obj.nodeDict)     # Create the graph from the labels and location
     src = obj.mapVal[(1, 8)]
     t = obj.mapVal[(14, 8)]
     dist, path = dijkstra(graph, src, t)
@@ -91,7 +75,7 @@ if __name__ == '__main__':
         if dist[i] < float('inf'):
             print("Distance of Node %s from source is: " % i, dist[i])
 
-    print('\nShortest distance from source to distination')
+    print('\nShortest distance from source to destination')
     print(spath[::-1])
-    print('\nShortest distance from source to distance from networkx function')
+    print('\nShortest distance from source to distance using networkx function')
     print(test_dijkstra(graph, src, t))
