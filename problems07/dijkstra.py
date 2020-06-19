@@ -52,7 +52,7 @@ def shortestPath(path, src, t):
 
 if __name__ == '__main__':
 
-    f = open('simple-map-1.txt', 'r')
+    f = open('simple-map-2.txt', 'r')
     graph = []
 
     for i in f:
@@ -65,8 +65,8 @@ if __name__ == '__main__':
     obj.create_graph(graph)  # Create labels and the location of the graph
 
     graph = obj.build_nx_graph(obj.succDict, obj.nodeDict)     # Create the graph from the labels and location
-    src = obj.mapVal[(1, 8)]
-    t = obj.mapVal[(14, 8)]
+    src = obj.mapVal[(0, 4)]
+    t = obj.mapVal[(14, 19)]
     dist, path = dijkstra(graph, src, t)
 
     spath = shortestPath(path, src, t)
