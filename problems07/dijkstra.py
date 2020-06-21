@@ -41,7 +41,7 @@ def dijkstra(G, src, t):
     return dist, path
 
 
-def shortestPath(path, src, t):
+def dijkstraShortestPath(path, src, t):
     p = []
     while path[t] != -1 and t != src:
         p.append(t)
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     t = obj.mapVal[(14, 19)]
     dist, path = dijkstra(graph, src, t)
 
-    spath = shortestPath(path, src, t)
+    spath = dijkstraShortestPath(path, src, t)
 
     for i in dist:
         if dist[i] < float('inf'):
