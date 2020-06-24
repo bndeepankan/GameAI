@@ -35,9 +35,7 @@ def checkPredVisible(G, pred, node, obj):
 
 
 def thinOutPath(G, path, obj):
-    newPath = []
-    newPath.append(path.pop())
-    newPath.append(path.pop())
+    newPath = [path.pop(), path.pop()]
     while path:
         pred = newPath[-2]
         node = path.pop()
